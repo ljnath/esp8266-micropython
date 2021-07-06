@@ -53,41 +53,30 @@ E = machine.Pin(2, machine.Pin.OUT)     # GPIO2     = D4
 F = machine.Pin(4, machine.Pin.OUT)     # GPIO4     = D2
 G = machine.Pin(15, machine.Pin.OUT)    # GPIO15    = D8
 
-all_segments = [A, B, C, D, E, F, G]
+ALL_SEGMENTS = (A, B, C, D, E, F, G)
 
-def get_segments(num):
-    segments = []
-    if num == 0:
-        segments = [A, B, C, D, E, F]
-    elif num == 1:
-        segments = [B, C]
-    elif num == 2:
-        segments = [A, B,  D, E, G]
-    elif num == 3:
-        segments = [A, B, C, D, G]
-    elif num == 4:
-        segments = [B, C, F, G]
-    elif num == 5:
-        segments = [A, C, D, F, G]
-    elif num == 6:
-        segments = [A, C, D, E, F, G]
-    elif num == 7:
-        segments = [A, B, C]
-    elif num == 8:
-        segments = [A, B, C, D, E, F, G]
-    elif num == 9:
-        segments = [A, B, C, D, F, G]
-    return segments
+DIGITS = {
+    0 : (A, B, C, D, E, F),
+    1 : (B, C),
+    2 : (A, B,  D, E, G),
+    3 : (A, B, C, D, G),
+    4 : (B, C, F, G),
+    5 : (A, C, D, F, G),
+    6 : (A, C, D, E, F, G),
+    7 : (A, B, C),
+    8 : (A, B, C, D, E, F, G),
+    9 : (A, B, C, D, F, G)
+}
 
 def main():
     counter = 0
     while True:
         
         # turning off all segements
-        [segment.off() for segment in all_segments]
+        [segment.off() for segment in ALL_SEGMENTS]
         
         # getting all segments that needs to be lit up based on the counter value
-        segments_to_lit = get_segments(counter)
+        segments_to_lit = DIGITS[counter]
         
         # liting up all the segments
         [segment.on() for segment in segments_to_lit]

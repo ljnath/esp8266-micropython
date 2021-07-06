@@ -53,65 +53,36 @@ E = machine.Pin(2, machine.Pin.OUT)     # GPIO2     = D4
 F = machine.Pin(4, machine.Pin.OUT)     # GPIO4     = D2
 G = machine.Pin(15, machine.Pin.OUT)    # GPIO15    = D8
 
-all_segments = [A, B, C, D, E, F, G]
-
-def get_segments(letter):
-    segments = []
-    if letter == 'A':
-        segments = [A, B, C, E, F, G]
-    elif letter == 'B':
-        segments = [C, D, E, F, G]
-    elif letter == 'C':
-        segments = [A, D, E, F]
-    elif letter == 'D':
-        segments = [B, C, D, E, G]
-    elif letter == 'E':
-        segments = [A, D, E, F, G]
-    elif letter == 'F':
-        segments = [A, E, F, G]
-    elif letter == 'G':
-        segments = [A, C, D, E, F]
-    elif letter == 'H':
-        segments = [C, E, F, G]
-    elif letter == 'I':
-        segments = [B, C]
-    elif letter == 'J':
-        segments = [B, C, D, E]
-    elif letter == 'K':
-        segments = [B, D, E, F, G]
-    elif letter == 'L':
-        segments = [D, E, F]
-    elif letter == 'M':
-        segments = [A, C, E]
-    elif letter == 'N':
-        segments = [C, E, G]
-    elif letter == 'O':
-        segments = [C, D, E, G]
-    elif letter == 'P':
-        segments = [A, B, E, F, G]
-    elif letter == 'Q':
-        segments = [A, B, C, F, G]
-    elif letter == 'R':
-        segments = [E, G]
-    elif letter == 'S':
-        segments = [A, C, D, F, G]
-    elif letter == 'T':
-        segments = [D, E, F, G]
-    elif letter == 'U':
-        segments = [C, D, E]
-    elif letter == 'V':
-        segments = [B, F, G]
-    elif letter == 'W':
-        segments = [B, D, F]
-    elif letter == 'X':
-        segments = [B, C, E, F, G]
-    elif letter == 'Y':
-        segments = [B, C, D, F, G]
-    elif letter == 'Z':
-        segments = [A, B, D, E, G]
-    return segments
-
-
+ALL_SEGMENTS = (A, B, C, D, E, F, G)
+LETTERS = {
+    'A' : (A, B, C, E, F, G),
+    'B' : (C, D, E, F, G),
+    'C' : (A, D, E, F),
+    'D' : (B, C, D, E, G),
+    'E' : (A, D, E, F, G),
+    'F' : (A, E, F, G),
+    'G' : (A, C, D, E, F),
+    'H' : (C, E, F, G),
+    'I' : (B, C),
+    'J' : (B, C, D, E),
+    'K' : (B, D, E, F, G),
+    'L' : (D, E, F),
+    'M' : (A, C, E),
+    'N' : (C, E, G),
+    'O' : (C, D, E, G),
+    'P' : (A, B, E, F, G),
+    'Q' : (A, B, C, F, G),
+    'R' : (E, G),
+    'S' : (A, C, D, F, G),
+    'T' : (D, E, F, G),
+    'U' : (C, D, E),
+    'V' : (B, F, G),
+    'W' : (B, D, F),
+    'X' : (B, C, E, F, G),
+    'Y' : (B, C, D, F, G),
+    'Z' : (A, B, D, E, G)
+}
+    
 def main():
     while True:
         word = 'abcdefghijklmnopqrstuvwxyz'
@@ -120,16 +91,16 @@ def main():
         
         for character in word:
             # turning off all segements
-            [segment.off() for segment in all_segments]
+            [segment.off() for segment in ALL_SEGMENTS]
             
             # getting all segments that needs to be lit up based on the counter value
-            segments_to_lit = get_segments(character.upper())
+            segments_to_lit = LETTERS[character.upper()]
             
             # liting up all the segments
             [segment.on() for segment in segments_to_lit]
             
             # sleeping for 1s to simulation an elapse of 1s
-            time.sleep(.5)
+            time.sleep(1)
         
 if __name__ == '__main__':
     main()
